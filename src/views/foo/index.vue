@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <div style="margin-bottom: 20px;">Foo</div>
+    <div style="margin-bottom: 20px;">Foo View</div>
     <!-- <tags-view /> -->
   </div>
 </template>
