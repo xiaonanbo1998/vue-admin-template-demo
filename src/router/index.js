@@ -173,14 +173,14 @@ export const constantRoutes = [
   },
 
   {
-    path: '/foo',
+    path: '/home',
     component: Layout,
     children: [
       {
         path: 'index',
-        name: 'Foo',
-        component: () => import('@/views/foo/index'),
-        meta: { title: 'Foo', icon: 'foo' }
+        name: 'Home',
+        component: () => import('@/views/home/index'),
+        meta: { title: '首页', icon: 'home' }
       }
     ]
   },
