@@ -7,24 +7,36 @@
     <div style="margin-top:20px;">
       <el-row :gutter="20">
         <el-col :lg="8">
-          <div class="grid-content bg-white">
+          <div class="grid-content">
             <card-panel :card-type="1" :service-data="orderData" />
           </div>
         </el-col>
         <el-col :lg="8">
-          <div class="grid-content bg-white">
+          <div class="grid-content">
             <card-panel :card-type="1" :service-data="consultationeData" />
           </div>
         </el-col>
         <el-col :lg="8">
-          <div class="grid-content bg-white">
+          <div class="grid-content">
             <card-panel :card-type="1" :service-data="transferData" />
           </div>
         </el-col>
       </el-row>
     </div>
     <div style="margin-top:20px;">
-      条形统计图
+      <el-row :gutter="20">
+        <el-col :lg="8">
+          <div class="grid-content echart-height">
+            <bar-chart />
+          </div>
+        </el-col>
+        <el-col :lg="8">
+          <div class="grid-content echart-height">预约转诊单</div>
+        </el-col>
+        <el-col :lg="8">
+          <div class="grid-content echart-height">远程会诊单</div>
+        </el-col>
+      </el-row>
     </div>
   </div>
 </template>
@@ -32,10 +44,11 @@
 <script>
 import DoctorTable from './components/DoctorTable'
 import CardPanel from '@/components/CardPanel'
+import BarChart from './components/BarChart'
 
 export default {
   name: 'Home',
-  components: { DoctorTable, CardPanel },
+  components: { DoctorTable, CardPanel, BarChart },
   data() {
     return {
       orderData: {
@@ -108,11 +121,12 @@ export default {
 .grid-content {
   border-radius: 4px;
   height: 155px;
+  background: #fff;
   overflow: hidden;
 }
 
-.bg-white {
-  background: #fff;
+.echart-height {
+  height: 380px;
 }
 
 @media (max-width: 1200px) {
