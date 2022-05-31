@@ -13,7 +13,7 @@
         </el-col>
         <el-col :lg="8">
           <div class="grid-content">
-            <card-panel :card-type="1" :service-data="consultationeData" />
+            <card-panel :card-type="1" :service-data="consultationData" />
           </div>
         </el-col>
         <el-col :lg="8">
@@ -27,14 +27,21 @@
       <el-row :gutter="20">
         <el-col :lg="8">
           <div class="grid-content echart-height">
-            <bar-chart />
+            <bar-chart :option-data="orderEchartsData" />
+            <span class="link">查看详情</span>
           </div>
         </el-col>
         <el-col :lg="8">
-          <div class="grid-content echart-height">预约转诊单</div>
+          <div class="grid-content echart-height">
+            <bar-chart :option-data="consultationEchartsData" />
+            <span class="link">查看详情</span>
+          </div>
         </el-col>
         <el-col :lg="8">
-          <div class="grid-content echart-height">远程会诊单</div>
+          <div class="grid-content echart-height">
+            <bar-chart :option-data="transferEchartsData" />
+            <span class="link">查看详情</span>
+          </div>
         </el-col>
       </el-row>
     </div>
@@ -42,6 +49,9 @@
 </template>
 
 <script>
+import { orderData, consultationData, transferData } from './CardPanelData.json'
+import EchartsData from './EchartsData.json'
+
 import DoctorTable from './components/DoctorTable'
 import CardPanel from '@/components/CardPanel'
 import BarChart from './components/BarChart'
@@ -51,61 +61,13 @@ export default {
   components: { DoctorTable, CardPanel, BarChart },
   data() {
     return {
-      orderData: {
-        title: '预约服务单近期数据',
-        serviceType: 1,
-        dataList: [
-          {
-            time: '今天',
-            value: 347
-          },
-          {
-            time: '一周',
-            value: 666
-          },
-          {
-            time: '一个月',
-            value: 2657
-          }
-        ]
-      },
-      consultationeData: {
-        title: '远程会诊近期数据',
-        serviceType: 2,
-        dataList: [
-          {
-            time: '今天',
-            value: 82
-          },
-          {
-            time: '一周',
-            value: 260
-          },
-          {
-            time: '一个月',
-            value: 570
-          }
-        ]
-      },
-      transferData: {
-        title: '转诊近期数据',
-        serviceType: 3,
-        dataList: [
-          {
-            time: '今天',
-            value: 588
-          },
-          {
-            time: '一周',
-            value: 702
-          },
-          {
-            time: '一个月',
-            value: 3845
-          }
-        ]
-      }
+      ...{ orderData, consultationData, transferData }
     }
+  },
+  computed: {
+    orderEchartsData: () => EchartsData.serviceData,
+    consultationEchartsData: () => EchartsData.consultationData,
+    transferEchartsData: () => EchartsData.transferData
   }
 }
 </script>
@@ -123,10 +85,36 @@ export default {
   height: 155px;
   background: #fff;
   overflow: hidden;
+  transition: all 0.5s;
+
+  &:hover {
+    box-shadow: 0px 10px 24px 0px rgba(9, 94, 166, 0.3);
+    transform: translateY(-3px);
+  }
 }
 
 .echart-height {
+  position: relative;
   height: 380px;
+
+  .link {
+    position: absolute;
+    top: 12px;
+    right: 26px;
+    font-size: 14px;
+    font-family: MicrosoftYaHei;
+    color: #9B9B9B;
+    line-height: 19px;
+    cursor: pointer;
+
+    &::after {
+      content: '>';
+      margin-left: 5px;
+      color: #9B9B9B;
+      line-height: 19px;
+      cursor: pointer;
+    }
+  }
 }
 
 @media (max-width: 1200px) {

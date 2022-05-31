@@ -4,18 +4,21 @@
 
 <script>
 import * as echarts from 'echarts'
+import { debounce } from '@/utils'
 
 export default {
-  mounted() {
-    this.$nextTick(() => {
-      this.initChart()
-    })
+  props: {
+    optionData: {
+      type: Object,
+      default: () => {}
+    }
   },
-  methods: {
-    initChart() {
-      var myChart = echarts.init(this.$refs.barChart)
-
-      var option = {
+  data() {
+    return {
+      // 重绘函数
+      resizeHandler: null,
+      myChart: null,
+      defaultOption: {
         title: {
           text: '预约服务单',
           subtext: '2657',
@@ -31,6 +34,10 @@ export default {
           axisPointer: {
             type: 'shadow'
           }
+        },
+        grid: {
+          top: 80,
+          bottom: 20
         },
         xAxis: {
           type: 'category',
@@ -54,6 +61,13 @@ export default {
             name: '增长率',
             data: [6, 5, 9, 7, 8, 13, 17, 25, 18, 17, 18, 11],
             type: 'bar',
+            label: {
+              show: true,
+              position: 'top',
+              fontSize: 14,
+              fontFamily: 'MicrosoftYaHei',
+              color: '#9b9b9b'
+            },
             itemStyle: {
               color: '#A0C8F7',
               borderRadius: [50, 50, 0, 0]
@@ -61,8 +75,56 @@ export default {
           }
         ]
       }
+    }
+  },
+  mounted() {
+    // 添加防抖，定义回调
+    this.resizeHandler = debounce(() => {
+      if (this.myChart) {
+        this.myChart.resize()
+      }
+    }, 100)
+    // 添加监听
+    this.initResizeEvent()
 
-      myChart.setOption(option)
+    this.$nextTick(() => {
+      this.initChart()
+    })
+  },
+  beforeDestroy() {
+    this.destroyResizeEvent()
+  },
+  // to fixed bug when cached by keep-alive
+  // https://github.com/PanJiaChen/vue-element-admin/issues/2116
+  activated() {
+    this.$_initResizeEvent()
+    this.$_initSidebarResizeEvent()
+  },
+  deactivated() {
+    this.$_destroyResizeEvent()
+    this.$_destroySidebarResizeEvent()
+  },
+  methods: {
+    initChart() {
+      this.myChart = echarts.init(this.$refs.barChart)
+
+      const option = Object.assign({}, this.defaultOption)
+      // 标题
+      option.title.text = this.optionData.title
+      // 副标题，数量
+      option.title.subtext = this.optionData.subtext
+      // 月数据
+      option.series[0].data = JSON.parse(JSON.stringify(this.optionData.data))
+      // 柱形条颜色
+      option.series[0].itemStyle.color = this.optionData.color
+
+      this.myChart.setOption(option)
+    },
+    initResizeEvent() {
+      window.addEventListener('resize', this.resizeHandler)
+    },
+    destroyResizeEvent() {
+      window.removeEventListener('resize', this.resizeHandler)
     }
   }
 }
