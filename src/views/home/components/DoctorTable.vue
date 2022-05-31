@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import doctorData from '../doctorData.json'
+import doctorData from '../DoctorData.json'
 
 export default {
   data() {

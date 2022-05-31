@@ -1,0 +1,56 @@
+{
+  "orderData": {
+    "title": "预约服务单近期数据",
+    "serviceType": 1,
+    "dataList": [
+      {
+        "time": "今天",
+        "value": 347
+      },
+      {
+        "time": "一周",
+        "value": 666
+      },
+      {
+        "time": "一个月",
+        "value": 2657
+      }
+    ]
+  },
+  "consultationData": {
+    "title": "远程会诊近期数据",
+    "serviceType": 2,
+    "dataList": [
+      {
+        "time": "今天",
+        "value": 82
+      },
+      {
+        "time": "一周",
+        "value": 260
+      },
+      {
+        "time": "一个月",
+        "value": 570
+      }
+    ]
+  },
+  "transferData": {
+    "title": "转诊近期数据",
+    "serviceType": 3,
+    "dataList": [
+      {
+        "time": "今天",
+        "value": 588
+      },
+      {
+        "time": "一周",
+        "value": 702
+      },
+      {
+        "time": "一个月",
+        "value": 3845
+      }
+    ]
+  }
+}
